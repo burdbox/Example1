@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>КАСУМИ — рамен-бар · крепкий бульон, домашняя лапша</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Noto+Serif+JP:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f2ecdd; --paper2:#e8e0ca; --ink:#17150f; --ink2:#242018;
+  --red:#d43b2c; --heat:#d43b2c; --gold:#b98a2f;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",sans-serif;line-height:1.6;overflow-x:hidden}
+::selection{background:var(--red);color:var(--paper)}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.disp{font-family:"Oswald",sans-serif;text-transform:uppercase}
+.jp{font-family:"Noto Serif JP",serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(18px,4vw,44px)}
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.08;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E")}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.btn{display:inline-block;background:var(--red);color:#fff;padding:13px 26px;font-family:"Oswald";font-size:15px;letter-spacing:.12em;text-transform:uppercase;border:2px solid var(--red);cursor:pointer;transition:.3s}
+.btn:hover{background:var(--ink);border-color:var(--ink);transform:translateY(-2px)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:var(--paper)}
+
+/* topbar + header */
+.topbar{background:var(--ink);color:var(--paper);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;text-align:center;padding:9px 16px}
+.site-head{position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:2px solid var(--ink);display:flex;align-items:center;justify-content:space-between;gap:18px;padding:12px clamp(18px,4vw,44px)}
+.logo{display:flex;align-items:center;gap:12px;font-family:"Oswald";font-weight:600;font-size:22px;letter-spacing:.24em}
+.logo b{display:grid;place-items:center;width:40px;height:40px;background:var(--red);color:#fff;font-family:"Noto Serif JP";font-size:20px;font-weight:700}
+.site-head nav{display:flex;gap:26px;font-size:13.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.site-head nav a{border-bottom:2px solid transparent;padding-bottom:3px;transition:.25s}
+.site-head nav a:hover{border-color:var(--red)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;padding:clamp(56px,8vw,110px) 0 clamp(48px,6vw,84px)}
+.sun{position:absolute;top:6%;right:14%;width:min(44vw,540px);aspect-ratio:1;border-radius:50%;background:var(--red);z-index:0;animation:sunrise 1.4s cubic-bezier(.2,.7,.2,1) both}
+@keyframes sunrise{from{transform:translateY(46%) scale(.94);opacity:0}}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:auto 1fr auto;gap:clamp(20px,4vw,56px);align-items:center}
+.vert{writing-mode:vertical-rl;font-size:clamp(15px,1.6vw,20px);letter-spacing:.5em;color:var(--ink);border-left:2px solid var(--ink);padding-left:18px;height:min(52vh,430px)}
+.hero h1{font-size:clamp(3.4rem,11vw,9.5rem);line-height:.94;font-weight:700;letter-spacing:.01em}
+.hero h1 .line{display:block;overflow:hidden}
+.hero h1 .line>span{display:inline-block;transform:translateY(112%);animation:rise .9s cubic-bezier(.2,.7,.2,1) forwards}
+.hero h1 .line:nth-child(2)>span{animation-delay:.12s}
+.hero h1 .line:nth-child(3)>span{animation-delay:.24s}
+@keyframes rise{to{transform:none}}
+.hero h1 mark{background:var(--red);color:#fff;padding:0 .14em}
+.hero-sub{max-width:44ch;margin:26px 0 28px;font-size:17px;color:var(--ink2)}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.hero-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.hero-meta span{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;border:1.5px solid var(--ink);padding:6px 14px;border-radius:999px;background:var(--paper)}
+.bowl{position:relative;width:min(30vw,330px)}
+.bowl .steam{position:absolute;top:-8px;left:50%;transform:translateX(-50%);display:flex;gap:16px;z-index:2}
+.bowl .steam i{width:9px;height:48px;border-radius:50%;background:#fff;filter:blur(7px);opacity:0;animation:steam 2.8s ease-in-out infinite}
+.bowl .steam i:nth-child(2){animation-delay:.8s;height:62px}
+.bowl .steam i:nth-child(3){animation-delay:1.5s}
+@keyframes steam{0%{transform:translateY(16px) scaleY(.7);opacity:0}30%{opacity:.9}100%{transform:translateY(-52px) scaleY(1.25);opacity:0}}
+.bowl .box{background:var(--ink);border:2px solid var(--ink);box-shadow:12px 12px 0 var(--red);padding:14px}
+.bowl img{width:100%;aspect-ratio:1;object-fit:cover}
+
+/* ticker */
+.ticker{background:var(--red);color:var(--paper);border-block:2px solid var(--ink);overflow:hidden}
+.ticker-track{display:flex;width:max-content;animation:tick 24s linear infinite}
+.ticker:hover .ticker-track{animation-play-state:paused}
+.ticker span{font-family:"Oswald";font-weight:500;font-size:18px;letter-spacing:.14em;padding:10px 0;white-space:nowrap}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* section heads */
+section{padding:clamp(64px,8vw,110px) 0}
+.sec-head{display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;margin-bottom:clamp(30px,4vw,54px)}
+.sec-head .jp-tag{font-size:14px;color:var(--red);letter-spacing:.3em}
+.sec-head h2{font-size:clamp(2.1rem,5vw,3.8rem);font-weight:700;letter-spacing:.01em}
+.sec-head p{margin-left:auto;max-width:36ch;font-size:15px;opacity:.8}
+
+/* menu */
+.menu{background:var(--ink);color:var(--paper)}
+.menu .sec-head p{opacity:.65}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.ramen-card{position:relative;overflow:hidden;background:var(--ink2);border:1.5px solid #f2ecdd33;padding:26px 24px 22px;display:flex;flex-direction:column;gap:12px;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s}
+.ramen-card:hover{transform:translateY(-8px);border-color:var(--red)}
+.ramen-card .kanji{position:absolute;right:6px;bottom:-26px;font-size:130px;line-height:1;color:#f2ecdd12;font-weight:700;pointer-events:none}
+.ramen-card.hot{background:var(--red);border-color:var(--red)}
+.ramen-card h3{font-size:24px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.ramen-card h3 small{font-family:"IBM Plex Sans";font-size:12px;letter-spacing:.2em;opacity:.7;text-transform:uppercase}
+.ramen-card p{font-size:14.5px;opacity:.85}
+.spec{display:flex;gap:8px;font-size:13px;align-items:baseline}
+.spec b{min-width:74px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:11.5px;opacity:.6}
+.spice{display:flex;gap:5px;align-items:center;font-size:12px;letter-spacing:.14em}
+.spice i{width:9px;height:9px;border-radius:50%;border:1.5px solid currentColor}
+.spice i.on{background:var(--red);border-color:var(--red)}
+.hot .spice i.on{background:#fff;border-color:#fff}
+.ramen-foot{margin-top:auto;padding-top:14px;border-top:1px dashed #f2ecdd44;display:flex;justify-content:space-between;align-items:center}
+.ramen-foot .price{font-family:"Oswald";font-size:26px;color:var(--gold)}
+.hot .ramen-foot .price{color:#fff}
+.ramen-foot span:last-child{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
+
+/* heat toggle */
+.heat-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(28px,5vw,70px);align-items:center}
+.heat-left h2{font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;line-height:1}
+.heat-left>p{margin:20px 0 28px;max-width:42ch;color:var(--ink2)}
+.heat-btns{display:flex;gap:12px;flex-wrap:wrap}
+.heat-btn{font-family:"Oswald";font-size:15px;letter-spacing:.12em;text-transform:uppercase;padding:13px 24px;background:transparent;border:2px solid var(--ink);cursor:pointer;transition:.3s;color:var(--ink)}
+.heat-btn:hover{transform:translateY(-2px)}
+.heat-btn.active{background:var(--heat);border-color:var(--heat);color:#fff}
+.heat-note{margin-top:20px;font-size:13px;letter-spacing:.06em;opacity:.65}
+.dish{background:var(--ink);color:var(--paper);border:2px solid var(--heat);box-shadow:12px 12px 0 var(--heat);padding:22px;transition:border-color .4s,box-shadow .4s}
+.dish.swap{animation:wig .5s ease}
+@keyframes wig{25%{transform:translateX(-6px) rotate(-.6deg)}60%{transform:translateX(5px) rotate(.5deg)}}
+.dish figure{overflow:hidden;border:2px solid var(--heat);transition:border-color .4s}
+.dish img{width:100%;aspect-ratio:16/9;object-fit:cover}
+.dish-body{padding-top:18px}
+.dish-badge{display:inline-block;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;background:var(--heat);color:#fff;padding:5px 12px;margin-bottom:12px;transition:background .4s}
+.dish h3{font-size:30px;font-weight:600}
+.dish p{margin:10px 0 14px;color:#f2ecddcc}
+.dish .sub{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--heat);transition:color .4s}
+
+/* kitchen */
+.kitchen{background:var(--paper2)}
+.kit-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,80px);align-items:start}
+.kit-sticky{position:sticky;top:100px}
+.kit-sticky h2{font-size:clamp(2.2rem,4.6vw,3.6rem);font-weight:700;line-height:1.05;margin:12px 0 20px}
+.kit-sticky p{max-width:40ch;color:var(--ink2)}
+.kit-steps{display:grid;gap:40px}
+.kit-step{border-top:2px solid var(--ink);padding-top:20px;display:grid;grid-template-columns:70px 1fr;gap:18px}
+.kit-step .num{font-family:"Oswald";font-size:40px;font-weight:700;color:var(--red);line-height:1}
+.kit-step h3{font-size:22px;font-weight:600;margin-bottom:8px}
+.kit-step p{font-size:15px;color:var(--ink2);max-width:52ch}
+.kit-step figure{grid-column:2;margin-top:16px;overflow:hidden;border:2px solid var(--ink);aspect-ratio:16/9}
+.kit-step img{width:100%;height:100%;object-fit:cover;animation:kb 18s ease-in-out infinite alternate}
+@keyframes kb{from{transform:scale(1)}to{transform:scale(1.1) translate(-2%,2%)}}
+
+/* small menu */
+.also-list{border-top:2px solid var(--ink)}
+.also-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:17px 6px;border-bottom:2px solid var(--ink);transition:.3s;cursor:default}
+.also-row:hover{background:var(--ink);color:var(--paper);padding-left:18px}
+.also-row:hover .p{color:var(--gold)}
+.also-row .n{font-weight:600;letter-spacing:.02em}
+.also-row .d{opacity:.6;font-size:14px;flex:1;text-align:right;margin-right:auto;padding:0 14px}
+.also-row .p{font-family:"Oswald";font-size:19px;white-space:nowrap}
+
+/* booking */
+.book{background:var(--ink);color:var(--paper)}
+.book-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px)}
+.book h2{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:700;line-height:1.02}
+.book-info{margin-top:28px;display:grid;gap:18px;font-size:15px;color:#f2ecddcc}
+.book-info b{display:block;font-family:"Oswald";letter-spacing:.14em;text-transform:uppercase;color:var(--red);font-size:13px;margin-bottom:4px}
+.book form{display:grid;gap:16px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.book label{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#f2ecdd99;display:grid;gap:7px}
+.book input,.book select{background:transparent;border:0;border-bottom:2px solid #f2ecdd44;color:var(--paper);padding:9px 2px;font-family:"IBM Plex Sans";font-size:16px}
+.book input:focus,.book select:focus{outline:none;border-color:var(--red)}
+.book select option{color:var(--ink)}
+.book-ok{font-family:"Oswald";font-size:24px;text-transform:uppercase;letter-spacing:.06em;color:var(--gold)}
+.book-ok small{display:block;font-family:"IBM Plex Sans";text-transform:none;letter-spacing:0;font-size:15px;margin-top:8px;color:#f2ecddcc}
+
+/* footer */
+footer{background:var(--ink);color:var(--paper);border-top:2px solid var(--red);padding:clamp(50px,7vw,90px) 0 26px}
+.foot-giant{font-family:"Oswald";font-weight:700;font-size:clamp(4rem,16vw,13rem);line-height:.9;text-transform:uppercase;letter-spacing:.02em;color:transparent;-webkit-text-stroke:2px #f2ecdd55;text-align:center;user-select:none}
+.foot-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:30px;border-top:1px solid #f2ecdd22;margin-top:44px;padding-top:34px;font-size:14.5px;color:#f2ecddbb}
+.foot-cols h4{font-family:"Oswald";font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--red);margin-bottom:12px}
+.foot-base{margin-top:40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:#f2ecda66}
+
+@media(max-width:920px){
+  .site-head nav{display:none}
+  .hero-grid{grid-template-columns:1fr}
+  .vert{display:none}
+  .sun{right:-22%;top:2%}
+  .bowl{width:min(70vw,330px)}
+  .heat-grid,.book-grid{grid-template-columns:1fr}
+  .kit-grid{grid-template-columns:1fr}
+  .kit-sticky{position:static}
+  .kit-step{grid-template-columns:1fr}
+  .kit-step .num,.kit-step figure{grid-column:1}
+  .f-row{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .ticker-track{animation:none;flex-wrap:wrap}
+  .reveal{opacity:1;transform:none}
+  .bowl .steam{display:none}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="topbar">Москва · Столешников пер., 7 · ежедневно 12:00–23:00 · лапшу крутим сами</div>
+
+<header class="site-head">
+  <a class="logo" href="#top"><b>霞</b>КАСУМИ</a>
+  <nav>
+    <a href="#menu">Меню</a><a href="#heat">Острота</a><a href="#kitchen">Кухня</a><a href="#book">Бронь</a>
+  </nav>
+  <a class="btn" href="#book">Забронировать</a>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div class="vert jp" aria-hidden="true">霞ラーメン・東京仕込み・毎日手作り</div>
+      <div>
+        <h1>
+          <span class="line"><span>Крепкий</span></span>
+          <span class="line"><span><mark>бульон.</mark></span></span>
+          <span class="line"><span>Живая лапша.</span></span>
+        </h1>
+        <p class="hero-sub">Рамен без сокращений: бульон варим 18 часов, лапшу крутим каждое утро, тямку не замораживаем. Суп, после которого хочется жить.</p>
+        <div class="hero-cta">
+          <a class="btn" href="#menu">Смотреть меню</a>
+          <a class="btn ghost" href="#book">Столик на вечер</a>
+        </div>
+        <div class="hero-meta">
+          <span>Тонкоцу 18 ч</span><span>Лапша — ручная</span><span>Без глутамата из банок</span>
+        </div>
+      </div>
+      <div class="bowl">
+        <div class="steam" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="box"><img src="https://picsum.photos/seed/tonkotsu-ramen-bowl/640/640" alt="Миска тонкоцу-рамена"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <span>拉麺 RAMEN ✦ 餃子 GYOZA ✦ 唐揚 KARAAGE ✦ 出汁 БУЛЬОН 18 ЧАСОВ ✦ 抹茶 МАТЧА ✦ 霞 KASUMI ✦ </span>
+      <span>拉麺 RAMEN ✦ 餃子 GYOZA ✦ 唐揚 KARAAGE ✦ 出汁 БУЛЬОН 18 ЧАСОВ ✦ 抹茶 МАТЧА ✦ 霞 KASUMI ✦ </span>
+    </div>
+  </div>
+
+  <section class="menu" id="menu">
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <span class="jp-tag jp">四つのスープ</span>
+        <h2>Четыре стихии бульона</h2>
+        <p>Каждая миска — бульон, тара, лапша и топпинги. Ничего лишнего, всё на месте.</p>
+      </header>
+      <div class="menu-grid">
+        <article class="ramen-card reveal">
+          <span class="kanji jp" aria-hidden="true">塩</span>
+          <h3>Сио <small>塩 · соль</small></h3>
+          <p>Прозрачный куриный бульон с комбу. Самый честный способ понять нашу кухню.</p>
+          <div class="spec"><b>Бульон</b>курица + комбу</div>
+          <div class="spec"><b>Лапша</b>тонкая, прямая</div>
+          <div class="spec"><b>Топпинги</b>тясю из курицы, адзитама, нэги</div>
+          <div class="spice">Острота <i class="on"></i><i></i><i></i><i></i><i></i></div>
+          <div class="ramen-foot"><span class="price">490 ₽</span><span>450 г</span></div>
+        </article>
+        <article class="ramen-card hot reveal">
+          <span class="kanji jp" aria-hidden="true">醤</span>
+          <h3>Сёю <small>醤 · соя</small></h3>
+          <p>Насыщенный бульон на соевой таре. Тот самый вкус, с которого начинается рамен.</p>
+          <div class="spec"><b>Бульон</b>курица + соевая тара</div>
+          <div class="spec"><b>Лапша</b>средняя, волнистая</div>
+          <div class="spec"><b>Топпинги</b>тясю из свинины, мэнма, нори</div>
+          <div class="spice">Острота <i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+          <div class="ramen-foot"><span class="price">540 ₽</span><span>хит бара</span></div>
+        </article>
+        <article class="ramen-card reveal">
+          <span class="kanji jp" aria-hidden="true">味</span>
+          <h3>Мисо <small>味 · мисо</small></h3>
+          <p>Плотный бульон на красном мисо с кунжутом. Согревает лучше любого пледа.</p>
+          <div class="spec"><b>Бульон</b>мисо + кунжут</div>
+          <div class="spec"><b>Лапша</b>толстая, волнистая</div>
+          <div class="spec"><b>Топпинги</b>свиной фарш, кукуруза, масло чили</div>
+          <div class="spice">Острота <i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+          <div class="ramen-foot"><span class="price">560 ₽</span><span>520 г</span></div>
+        </article>
+        <article class="ramen-card reveal">
+          <span class="kanji jp" aria-hidden="true">豚</span>
+          <h3>Тонкоцу <small>豚 · кость</small></h3>
+          <p>18 часов варки, пока кости не отдадут всё. Густой, молочный, бескомпромиссный.</p>
+          <div class="spec"><b>Бульон</b>свиные кости, 18 ч</div>
+          <div class="spec"><b>Лапша</b>тонкая, хаката</div>
+          <div class="spec"><b>Топпинги</b>двойное тясю, чёрный чеснок</div>
+          <div class="spice">Острота <i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div>
+          <div class="ramen-foot"><span class="price">620 ₽</span><span>550 г</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="heat">
+    <div class="wrap heat-grid">
+      <div class="heat-left reveal">
+        <span class="jp-tag jp">辛さを選べ</span>
+        <h2>Выбери свой огонь</h2>
+        <p>Мы уважаем и тех, кто любит помягче, и тех, кто просит «как в аду». Переключай — блюдо справа покажет, на что ты подписался.</p>
+        <div class="heat-btns" role="tablist">
+          <button class="heat-btn" data-heat="mild">Мягкий</button>
+          <button class="heat-btn active" data-heat="hot">Острый</button>
+          <button class="heat-btn" data-heat="inferno">Адский</button>
+        </div>
+        <p class="heat-note">* к «адскому» бесплатно подаём стакан молока и уважение</p>
+      </div>
+      <div class="dish reveal" id="dishCard">
+        <figure><img id="dishImg" src="https://picsum.photos/seed/ramen-spicy-miso/860/484" alt="Блюдо по уровню остроты"></figure>
+        <div class="dish-body">
+          <span class="dish-badge" id="dishBadge">Острота 3/5</span>
+          <h3 id="dishTitle">Спайси-мисо</h3>
+          <p id="dishDesc">Красный мисо, кунжут и ложка масла чили ручной обжарки. Тепло, честно, вкусно.</p>
+          <div class="sub" id="dishSub">масло чили с юдзу</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="kitchen" id="kitchen">
+    <div class="wrap kit-grid">
+      <div class="kit-sticky reveal">
+        <span class="jp-tag jp">厨房</span>
+        <h2>Кухня без сокращений</h2>
+        <p>Рамен нельзя ускорить — можно только не спать. Вот из чего собраны наши миски.</p>
+      </div>
+      <div class="kit-steps">
+        <div class="kit-step reveal">
+          <div class="num">01</div>
+          <div>
+            <h3>Бульон</h3>
+            <p>Свиные кости и куриные каркасы варим 18 часов без остановки. Мешаем вручную, огонь не убавляем.</p>
+            <figure><img src="https://picsum.photos/seed/ramen-broth-pot/900/506" alt="Котёл с бульоном"></figure>
+          </div>
+        </div>
+        <div class="kit-step reveal">
+          <div class="num">02</div>
+          <div>
+            <h3>Тара</h3>
+            <p>Соевая, соляная и мисо-база готовим отдельно по рецептам, привезённым из Токио. Тара — это характер миски.</p>
+          </div>
+        </div>
+        <div class="kit-step reveal">
+          <div class="num">03</div>
+          <div>
+            <h3>Лапша</h3>
+            <p>Крутим каждое утро из муки с высоким содержанием белка и щёлочной воды кансуй. Поэтому она пружинит.</p>
+            <figure><img src="https://picsum.photos/seed/ramen-noodles-making/900/506" alt="Приготовление лапши"></figure>
+          </div>
+        </div>
+        <div class="kit-step reveal">
+          <div class="num">04</div>
+          <div>
+            <h3>Тясю</h3>
+            <p>Свинину сутки держим в су-виде при 62°, затем быстро обжигаем. Тает — проверяли сотни раз.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <header class="sec-head reveal">
+        <span class="jp-tag jp">一品料理</span>
+        <h2>Ещё в меню</h2>
+      </header>
+      <div class="also-list reveal">
+        <div class="also-row"><span class="n">Гёдза со свининой</span><span class="d">6 шт, жарим до хруста</span><span class="p">390 ₽</span></div>
+        <div class="also-row"><span class="n">Карааге</span><span class="d">хрустящая курица, соус понзу</span><span class="p">420 ₽</span></div>
+        <div class="also-row"><span class="n">Онигири дня</span><span class="d">рис, нори, секрет шефа</span><span class="p">220 ₽</span></div>
+        <div class="also-row"><span class="n">Матча-тирамису</span><span class="d">десерт, ради которого остаются</span><span class="p">350 ₽</span></div>
+        <div class="also-row"><span class="n">Юдзу-лимонад</span><span class="d">спасает после адской остроты</span><span class="p">240 ₽</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="book" id="book">
+    <div class="wrap book-grid">
+      <div class="reveal">
+        <h2>Столик на вечер</h2>
+        <div class="book-info">
+          <div><b>Адрес</b>Москва, Столешников пер., 7 — ищите красный фонарь</div>
+          <div><b>Часы</b>ежедневно 12:00–23:00, кухня до 22:30</div>
+          <div><b>Связь</b>+7 (495) 555-07-77 · hi@kasumi.moscow</div>
+        </div>
+      </div>
+      <form id="bookForm" class="reveal" novalidate>
+        <label>Имя <input type="text" id="bName" required placeholder="Как вас зовут?"></label>
+        <div class="f-row">
+          <label>Дата <input type="date" id="bDate" required></label>
+          <label>Время <input type="time" id="bTime" required></label>
+        </div>
+        <label>Гостей
+          <select id="bGuests">
+            <option>1 персона</option><option selected>2 персоны</option><option>3 персоны</option>
+            <option>4 персоны</option><option>5 персон</option><option>6+ — напишем сами</option>
+          </select>
+        </label>
+        <button class="btn" type="submit">Забронировать столик</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-giant" aria-hidden="true">KASUMI</div>
+    <div class="foot-cols">
+      <div><h4>Часы</h4>пн–вс 12:00–23:00<br>кухня до 22:30</div>
+      <div><h4>Адрес</h4>Москва<br>Столешников пер., 7</div>
+      <div><h4>Соцсети</h4>Telegram<br>VK<br>*запрещённая, но красивая</div>
+      <div><h4>Связь</h4>+7 (495) 555-07-77<br>hi@kasumi.moscow</div>
+    </div>
+    <div class="foot-base"><span>© 2025 Рамен-бар «Касуми»</span><span>拉麺は愛です — рамен это любовь</span></div>
+  </div>
+</footer>
+
+<script>
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* reveals */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+}), { threshold:.14 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* heat toggle */
+const HEAT = {
+  mild:{badge:'Острота 1/5', title:'Сёю-классик', desc:'Тот самый, с которого всё началось: прозрачный бульон, соевая тара, никакой суеты.', sub:'мягко · семейный формат', seed:'ramen-mild-shoyu', color:'#b98a2f'},
+  hot:{badge:'Острота 3/5', title:'Спайси-мисо', desc:'Красный мисо, кунжут и ложка масла чили ручной обжарки. Тепло, честно, вкусно.', sub:'масло чили с юдзу', seed:'ramen-spicy-miso', color:'#d43b2c'},
+  inferno:{badge:'Острота 5/5 · предупреждаем честно', title:'Драконий тонкоцу', desc:'Тройной чили, масло с призрачным перцем и бульон 18-часовой варки. Расписка о смелости — на кассе.', sub:'молоко в подарок', seed:'ramen-fire-dragon', color:'#a3170c'}
+};
+const dish = document.getElementById('dishCard');
+document.querySelectorAll('.heat-btn').forEach(btn => btn.addEventListener('click', () => {
+  document.querySelectorAll('.heat-btn').forEach(b => b.classList.toggle('active', b === btn));
+  const h = HEAT[btn.dataset.heat];
+  document.getElementById('dishBadge').textContent = h.badge;
+  document.getElementById('dishTitle').textContent = h.title;
+  document.getElementById('dishDesc').textContent = h.desc;
+  document.getElementById('dishSub').textContent = h.sub;
+  document.getElementById('dishImg').src = 'https://picsum.photos/seed/' + h.seed + '/860/484';
+  dish.style.borderColor = h.color;
+  dish.style.boxShadow = '12px 12px 0 ' + h.color;
+  document.querySelector('.dish-badge').style.background = h.color;
+  document.getElementById('dishSub').style.color = h.color;
+  dish.classList.remove('swap'); void dish.offsetWidth; dish.classList.add('swap');
+}));
+
+/* booking form */
+document.getElementById('bookForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const name = document.getElementById('bName').value.trim();
+  const date = document.getElementById('bDate').value;
+  const time = document.getElementById('bTime').value;
+  if(!name || !date || !time){
+    e.target.style.animation = 'wig .5s ease';
+    setTimeout(() => e.target.style.animation = '', 500);
+    return;
+  }
+  e.target.innerHTML = '<p class="book-ok">Принято, ' + name.replace(/</g,'&lt;') + '!<small>Ждём вас ' + date + ' в ' + time + '. Опоздаете больше 15 минут — бульон не ждёт.</small></p>';
+});
+</script>
+</body>
+</html>
